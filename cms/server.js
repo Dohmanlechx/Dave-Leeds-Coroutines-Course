@@ -53,6 +53,19 @@ async function ensureCategory(mod, moduleOrder) {
   }
 }
 
+// Directory that holds a module's pasted images (referenced as ./img/<file> from the .md).
+function imgDir(moduleSlug) {
+  return path.join(DOCS_DIR, moduleSlug, 'img');
+}
+
+// Resolve a request's asset path safely: known module, no traversal, .webp only.
+function safeAssetPath(moduleSlug, file) {
+  if (!moduleBySlug.has(moduleSlug)) return null;
+  const name = path.basename(file || '');
+  if (!name.toLowerCase().endsWith('.webp')) return null;
+  return path.join(imgDir(moduleSlug), name);
+}
+
 // --- API ------------------------------------------------------------------
 
 // Course menu, annotated with whether each lesson already has a saved note.
@@ -126,6 +139,59 @@ app.post('/api/rewrite', async (req, res) => {
     res.json({ text: corrected });
   } catch (err) {
     console.error('Rewrite failed:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Save a pasted screenshot (already converted to WebP client-side) next to the lesson.
+app.post(
+  '/api/image/:moduleSlug/:lessonSlug',
+  express.raw({ type: 'image/webp', limit: '25mb' }),
+  async (req, res) => {
+    try {
+      const { moduleSlug, lessonSlug } = req.params;
+      const info = lessonIndex.get(`${moduleSlug}/${lessonSlug}`);
+      if (!info) return res.status(404).json({ error: 'Unknown lesson' });
+      if (!req.body || !req.body.length) return res.status(400).json({ error: 'Empty image' });
+
+      await ensureCategory(info.module, info.moduleOrder);
+      await fsp.mkdir(imgDir(moduleSlug), { recursive: true });
+
+      const suffix = Math.random().toString(36).slice(2, 6);
+      const file = `${lessonSlug}-${Date.now()}${suffix}.webp`;
+      await fsp.writeFile(path.join(imgDir(moduleSlug), file), req.body);
+
+      res.json({
+        file,
+        markdown: `![screenshot](./img/${file})`,
+        url: `/api/asset/${moduleSlug}/${file}`,
+      });
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+// Serve a stored image (used by the CMS thumbnail strip).
+app.get('/api/asset/:moduleSlug/:file', (req, res) => {
+  const full = safeAssetPath(req.params.moduleSlug, req.params.file);
+  if (!full) return res.status(400).end();
+  res.sendFile(full, (err) => {
+    if (err && !res.headersSent) res.status(404).end();
+  });
+});
+
+// Delete a stored image (thumbnail × removal).
+app.delete('/api/asset/:moduleSlug/:file', async (req, res) => {
+  const full = safeAssetPath(req.params.moduleSlug, req.params.file);
+  if (!full) return res.status(400).json({ error: 'Bad asset path' });
+  try {
+    await fsp.unlink(full);
+    res.json({ ok: true });
+  } catch (err) {
+    if (err.code === 'ENOENT') return res.json({ ok: true }); // already gone
+    console.error('Image delete failed:', err);
     res.status(500).json({ error: err.message });
   }
 });

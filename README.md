@@ -51,6 +51,10 @@ Or run them individually: `npm run cms` / `npm run docs`.
 3. Click **Save**. A Markdown file is written to `docs-site/docs/<module>/<lesson>.md`.
 4. The docs site hot-reloads and shows the lesson under its module.
 
+**Screenshots:** paste an image (Ctrl/Cmd+V) into the **General Notes** or **Code Snippets &
+Gotchas** field. It's compressed to WebP, saved next to the lesson under `img/`, and inserted
+as a Markdown image (with a thumbnail preview you can remove).
+
 ## How notes are stored
 
 Each note is a single Markdown file under `docs-site/docs/`, with frontmatter plus fixed

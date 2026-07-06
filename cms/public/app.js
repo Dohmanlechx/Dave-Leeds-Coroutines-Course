@@ -166,8 +166,20 @@ function buildTextField(field, value) {
   textarea.rows = 6;
   textarea.spellcheck = true;
   textarea.value = value;
-  textarea.addEventListener('input', markDirty);
   wrap.appendChild(textarea);
+
+  // Strip of thumbnails for screenshots pasted into this field.
+  const strip = document.createElement('div');
+  strip.className = 'thumb-strip';
+  wrap.appendChild(strip);
+
+  const refreshThumbs = () => renderThumbs(strip, textarea);
+  textarea.addEventListener('input', () => {
+    markDirty();
+    refreshThumbs();
+  });
+  textarea.addEventListener('paste', (e) => handleImagePaste(e, textarea, refreshThumbs));
+  refreshThumbs();
 
   const ctrl = {
     element: wrap,
@@ -176,6 +188,7 @@ function buildTextField(field, value) {
     applyRewrite: (str) => {
       textarea.value = str;
       markDirty();
+      refreshThumbs();
     },
     setDisabled: (b) => {
       textarea.disabled = b;
@@ -184,6 +197,128 @@ function buildTextField(field, value) {
 
   rewriteBtn.addEventListener('click', () => rewriteField(rewriteBtn, ctrl));
   return ctrl;
+}
+
+// --- Screenshot paste -----------------------------------------------------
+
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Filenames of images referenced in the field via ![...](./img/<file>).
+function parseImageRefs(text) {
+  const re = /!\[[^\]]*\]\(\.\/img\/([^)]+)\)/g;
+  const files = [];
+  let m;
+  while ((m = re.exec(text)) !== null) files.push(m[1]);
+  return files;
+}
+
+function renderThumbs(strip, textarea) {
+  if (!state.current) return;
+  const { moduleSlug } = state.current;
+  strip.innerHTML = '';
+  parseImageRefs(textarea.value).forEach((file) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb';
+
+    const img = document.createElement('img');
+    img.src = `/api/asset/${moduleSlug}/${encodeURIComponent(file)}`;
+    img.alt = 'screenshot';
+
+    const rm = document.createElement('button');
+    rm.type = 'button';
+    rm.className = 'thumb-remove';
+    rm.title = 'Remove image';
+    rm.textContent = '×';
+    rm.addEventListener('click', () => removeImage(textarea, strip, file));
+
+    thumb.appendChild(img);
+    thumb.appendChild(rm);
+    strip.appendChild(thumb);
+  });
+}
+
+function removeImage(textarea, strip, file) {
+  const ref = new RegExp('!\\[[^\\]]*\\]\\(\\./img/' + escapeRegExp(file) + '\\)\\n?');
+  textarea.value = textarea.value.replace(ref, '');
+  markDirty();
+  renderThumbs(strip, textarea);
+  const { moduleSlug } = state.current;
+  fetch(`/api/asset/${moduleSlug}/${encodeURIComponent(file)}`, { method: 'DELETE' }).catch(() => {});
+}
+
+function insertAtCursor(textarea, text) {
+  const start = textarea.selectionStart ?? textarea.value.length;
+  const end = textarea.selectionEnd ?? textarea.value.length;
+  textarea.value = textarea.value.slice(0, start) + text + textarea.value.slice(end);
+  const caret = start + text.length;
+  textarea.setSelectionRange(caret, caret);
+  markDirty();
+}
+
+// Draw an image blob onto a canvas and export it as a lossy WebP blob.
+function imageBlobToWebp(blob, quality) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(
+        (out) => (out ? resolve(out) : reject(new Error('WebP export not supported by this browser'))),
+        'image/webp',
+        quality
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Could not read the pasted image'));
+    };
+    img.src = url;
+  });
+}
+
+async function handleImagePaste(e, textarea, refreshThumbs) {
+  const items = (e.clipboardData && e.clipboardData.items) || [];
+  let imageItem = null;
+  for (const it of items) {
+    if (it.kind === 'file' && it.type.startsWith('image/')) {
+      imageItem = it;
+      break;
+    }
+  }
+  if (!imageItem) return; // not an image — let normal text paste happen
+  e.preventDefault();
+  if (!state.current) return;
+
+  const blob = imageItem.getAsFile();
+  if (!blob) return;
+
+  const placeholder = '\n_(uploading screenshot…)_\n';
+  insertAtCursor(textarea, placeholder);
+
+  try {
+    const webp = await imageBlobToWebp(blob, 0.85);
+    const { moduleSlug, lessonSlug } = state.current;
+    const res = await fetch(`/api/image/${moduleSlug}/${lessonSlug}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'image/webp' },
+      body: webp,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Upload failed (${res.status})`);
+    textarea.value = textarea.value.replace(placeholder, `\n${data.markdown}\n`);
+    markDirty();
+    refreshThumbs();
+  } catch (err) {
+    textarea.value = textarea.value.replace(placeholder, '');
+    alert('Screenshot paste failed: ' + err.message);
+    refreshThumbs();
+  }
 }
 
 // Turn a stored "- item" markdown block into an array of item strings.
