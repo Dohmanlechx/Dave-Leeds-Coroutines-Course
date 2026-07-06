@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coroutines TIL · CMS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <header class="sidebar-head">
+          <h1>Coroutines TIL</h1>
+          <p>Dave Leeds · Kotlin Coroutines</p>
+        </header>
+        <nav id="menu" aria-label="Course lessons"></nav>
+      </aside>
+
+      <main id="main">
+        <div id="empty-state" class="empty">
+          <h2>Pick a lesson</h2>
+          <p>Choose a lesson from the left to start writing your notes.</p>
+        </div>
+
+        <section id="editor" hidden>
+          <div class="editor-head">
+            <div>
+              <p class="module-label" id="editor-module"></p>
+              <h2 id="editor-title"></h2>
+            </div>
+            <div class="editor-actions">
+              <span id="status" class="status"></span>
+              <button id="save-btn" class="btn btn-primary">Save note</button>
+            </div>
+          </div>
+          <div id="fields"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="field-template">
+      <div class="field">
+        <div class="field-head">
+          <label></label>
+          <button class="btn btn-ghost rewrite-btn" type="button">✨ Rewrite with Claude</button>
+        </div>
+        <p class="field-hint" hidden></p>
+        <textarea rows="6" spellcheck="true"></textarea>
+      </div>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

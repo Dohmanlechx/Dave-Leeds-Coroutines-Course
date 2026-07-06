@@ -1,0 +1,19 @@
+{
+  "name": "coroutines-til",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Team learning notes for Dave Leeds' Kotlin Coroutines course: a local CMS that writes Markdown into a Docusaurus site.",
+  "workspaces": [
+    "docs-site",
+    "cms"
+  ],
+  "scripts": {
+    "cms": "node cms/server.js",
+    "docs": "npm --workspace docs-site run start",
+    "build:docs": "npm --workspace docs-site run build",
+    "dev": "concurrently --names \"CMS,DOCS\" --prefix-colors \"magenta,cyan\" \"npm run cms\" \"npm run docs\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

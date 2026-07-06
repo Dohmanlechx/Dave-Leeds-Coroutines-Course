@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Docusaurus
+docs-site/.docusaurus/
+docs-site/build/
+.cache-loader/
+
+# Kotlin / Gradle
+kotlin/**/build/
+kotlin/**/.gradle/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

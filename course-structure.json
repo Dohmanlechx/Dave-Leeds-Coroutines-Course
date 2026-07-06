@@ -1,0 +1,130 @@
+[
+  {
+    "module": "Coroutines and Suspending Functions",
+    "slug": "01-coroutines-suspending-functions",
+    "lessons": [
+      { "title": "Intro to Coroutines and Concurrency", "slug": "intro-to-coroutines-and-concurrency" },
+      { "title": "Suspending Functions", "slug": "suspending-functions" },
+      { "title": "Coroutines in the Standard Library", "slug": "coroutines-in-the-standard-library" }
+    ]
+  },
+  {
+    "module": "Builders, Dispatchers, and Context",
+    "slug": "02-builders-dispatchers-context",
+    "lessons": [
+      { "title": "You'll Need a Scope...", "slug": "youll-need-a-scope" },
+      { "title": "Coroutine Builders: launch() and async()", "slug": "coroutine-builders-launch-and-async" },
+      { "title": "Threads and Dispatchers", "slug": "threads-and-dispatchers" },
+      { "title": "Coroutine Context", "slug": "coroutine-context" },
+      { "title": "Ways to Get a Scope", "slug": "ways-to-get-a-scope" }
+    ]
+  },
+  {
+    "module": "Shared Mutable State",
+    "slug": "03-shared-mutable-state",
+    "lessons": [
+      { "title": "Intro to Shared Mutable State", "slug": "intro-to-shared-mutable-state" },
+      { "title": "Avoiding Shared Mutable State", "slug": "avoiding-shared-mutable-state" },
+      { "title": "Confinement", "slug": "confinement" },
+      { "title": "Mutex Locks", "slug": "mutex-locks" },
+      { "title": "Atomics", "slug": "atomics" }
+    ]
+  },
+  {
+    "module": "Structured Concurrency 1",
+    "slug": "04-structured-concurrency-1",
+    "lessons": [
+      { "title": "Structured Programming & Concurrency", "slug": "structured-programming-and-concurrency" },
+      { "title": "Creating Structured Concurrency", "slug": "creating-structured-concurrency" },
+      { "title": "Scopes and Suspending Functions", "slug": "scopes-and-suspending-functions" },
+      { "title": "Structured Concurrency in Practice", "slug": "structured-concurrency-in-practice" }
+    ]
+  },
+  {
+    "module": "Structured Concurrency 2",
+    "slug": "05-structured-concurrency-2",
+    "lessons": [
+      { "title": "Cancellations", "slug": "cancellations" },
+      { "title": "Managing Cancellations", "slug": "managing-cancellations" },
+      { "title": "Exceptions in Coroutines", "slug": "exceptions-in-coroutines" },
+      { "title": "Supervisors", "slug": "supervisors" },
+      { "title": "CoroutineExceptionHandler", "slug": "coroutine-exception-handler" }
+    ]
+  },
+  {
+    "module": "Coroutine Usage Patterns",
+    "slug": "06-coroutine-usage-patterns",
+    "lessons": [
+      { "title": "Avoiding Unnecessary Coroutines", "slug": "avoiding-unnecessary-coroutines" },
+      { "title": "Attaching a Scope to a Lifecycle", "slug": "attaching-a-scope-to-a-lifecycle" },
+      { "title": "Passing Scopes and Dispatchers", "slug": "passing-scopes-and-dispatchers" },
+      { "title": "Wrapping Callback-Based APIs", "slug": "wrapping-callback-based-apis" }
+    ]
+  },
+  {
+    "module": "Flow 1: Essentials",
+    "slug": "07-flow-1-essentials",
+    "lessons": [
+      { "title": "Review of Collections and Sequences", "slug": "review-of-collections-and-sequences" },
+      { "title": "Flows, Collectors, and Emitters", "slug": "flows-collectors-and-emitters" },
+      { "title": "Flow Operators", "slug": "flow-operators" },
+      { "title": "Flow and Cancellations", "slug": "flow-and-cancellations" },
+      { "title": "Flow and Exceptions", "slug": "flow-and-exceptions" }
+    ]
+  },
+  {
+    "module": "Flow 2: Multi-Coroutine Flows",
+    "slug": "08-flow-2-multi-coroutine-flows",
+    "lessons": [
+      { "title": "Intro to Multi-Coroutine Flows", "slug": "intro-to-multi-coroutine-flows" },
+      { "title": "Multi-Coroutine Flow Operators", "slug": "multi-coroutine-flow-operators" },
+      { "title": "Putting Flows Together", "slug": "putting-flows-together" },
+      { "title": "Flattening Flows", "slug": "flattening-flows" }
+    ]
+  },
+  {
+    "module": "Flow 3: Hot Flows",
+    "slug": "09-flow-3-hot-flows",
+    "lessons": [
+      { "title": "Intro to Hot Flows", "slug": "intro-to-hot-flows" },
+      { "title": "SharedFlow", "slug": "sharedflow" },
+      { "title": "StateFlow", "slug": "stateflow" },
+      { "title": "Converting Cold Flows into Hot Flows", "slug": "converting-cold-flows-into-hot-flows" }
+    ]
+  },
+  {
+    "module": "Channels",
+    "slug": "10-channels",
+    "lessons": [
+      { "title": "Intro to Workflows", "slug": "intro-to-workflows" },
+      { "title": "Channel Basics", "slug": "channel-basics" },
+      { "title": "Complex Workflows", "slug": "complex-workflows" },
+      { "title": "Produce and Select", "slug": "produce-and-select" },
+      { "title": "Actors", "slug": "actors" },
+      { "title": "Terminating Channels", "slug": "terminating-channels" },
+      { "title": "Channels and Flows", "slug": "channels-and-flows" }
+    ]
+  },
+  {
+    "module": "Testing and Debugging",
+    "slug": "11-testing-and-debugging",
+    "lessons": [
+      { "title": "Basics of Testing Concurrent Code", "slug": "basics-of-testing-concurrent-code" },
+      { "title": "Controlling Time in Tests", "slug": "controlling-time-in-tests" },
+      { "title": "Testing Coroutines on External Scopes", "slug": "testing-coroutines-on-external-scopes" },
+      { "title": "Testing Flows", "slug": "testing-flows" },
+      { "title": "Debugging with IDs and Names", "slug": "debugging-with-ids-and-names" },
+      { "title": "Debugging Coroutines in the IDE", "slug": "debugging-coroutines-in-the-ide" },
+      { "title": "The Coroutines Debugging Library", "slug": "the-coroutines-debugging-library" }
+    ]
+  },
+  {
+    "module": "Coroutines in the Wild",
+    "slug": "12-coroutines-in-the-wild",
+    "lessons": [
+      { "title": "Coroutines in Spring Framework", "slug": "coroutines-in-spring-framework" },
+      { "title": "Coroutines in Ktor Server and Client", "slug": "coroutines-in-ktor-server-and-client" },
+      { "title": "Coroutines in Compose Apps", "slug": "coroutines-in-compose-apps" }
+    ]
+  }
+]
