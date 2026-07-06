@@ -11,8 +11,11 @@ const config = {
     v4: true,
   },
 
-  url: 'http://localhost',
-  baseUrl: '/',
+  // Deployed to GitHub Pages as a project site.
+  url: 'https://dohmanlechx.github.io',
+  baseUrl: '/Dave-Leeds-Coroutines-Course/',
+  organizationName: 'Dohmanlechx',
+  projectName: 'Dave-Leeds-Coroutines-Course',
 
   onBrokenLinks: 'warn',
 
