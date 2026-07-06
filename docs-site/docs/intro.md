@@ -17,7 +17,4 @@ organized into a few sections:
 - **General Notes** — freeform notes.
 - **Code Snippets & Gotchas** — Kotlin examples and things that tripped me up.
 
-> These notes are written and edited through a small local CMS (see the repo `README.md`),
-> which writes the Markdown files that build this site.
-
 Pick a lesson from the sidebar to get started.
