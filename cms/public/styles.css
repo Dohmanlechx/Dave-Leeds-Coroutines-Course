@@ -132,6 +132,35 @@ textarea {
 }
 textarea:focus { outline: none; border-color: var(--accent); }
 
+/* List (bullet) fields */
+.list-editor { display: flex; flex-direction: column; gap: 6px; }
+.list-row { display: flex; align-items: center; gap: 8px; }
+.list-row .bullet { color: var(--accent); font-size: 18px; line-height: 1; flex: none; }
+.list-input {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 9px 12px;
+  font: inherit;
+}
+.list-input:focus { outline: none; border-color: var(--accent); }
+.row-remove {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex: none;
+}
+.row-remove:hover:not(:disabled) { color: #e0576b; background: var(--panel-2); }
+.row-remove:disabled { opacity: .4; cursor: default; }
+.add-item { margin-top: 10px; font-size: 12px; padding: 6px 12px; }
+
 /* Buttons */
 .btn {
   border-radius: 8px;
