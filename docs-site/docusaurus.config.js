@@ -9,9 +9,9 @@ const config = {
 
   // Deployed to GitHub Pages as a project site.
   url: 'https://dohmanlechx.github.io',
-  baseUrl: '/Dave-Leeds-Coroutines-Course/',
+  baseUrl: '/coroutines-learning-notes/',
   organizationName: 'Dohmanlechx',
-  projectName: 'Dave-Leeds-Coroutines-Course',
+  projectName: 'coroutines-learning-notes',
 
   onBrokenLinks: 'warn',
 
