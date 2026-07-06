@@ -96,7 +96,6 @@ async function selectLesson(moduleSlug, lessonSlug) {
   state.current = { moduleSlug, lessonSlug };
   state.dirty = false;
 
-  $('#empty-state').hidden = true;
   $('#editor').hidden = false;
   $('#editor-module').textContent = note.module;
   $('#editor-title').textContent = note.title;
@@ -212,7 +211,16 @@ window.addEventListener('beforeunload', (e) => {
   }
 });
 
-loadMenu().catch((err) => {
+async function bootstrap() {
+  await loadMenu();
+  // Show inputs immediately by opening the first lesson.
+  const first = state.structure[0];
+  if (first && first.lessons[0]) {
+    await selectLesson(first.slug, first.lessons[0].slug);
+  }
+}
+
+bootstrap().catch((err) => {
   document.querySelector('#menu').innerHTML =
     `<p style="padding:16px;color:#e0a437">Could not load course menu: ${escapeHtml(err.message)}</p>`;
 });
