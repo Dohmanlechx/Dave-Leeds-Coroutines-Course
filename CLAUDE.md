@@ -10,10 +10,10 @@ Use **[Conventional Commits](https://www.conventionalcommits.org/)**:
 
 ```
 <type>(<optional scope>): <short summary>
-
-<optional body>
 ```
 
+- **Title only — never write a commit body.** One subject line per commit (to save tokens).
+  Keep the required `Co-Authored-By:` trailer; that footer is not a "body".
 - **type** — one of:
   - `feat` — a new feature
   - `fix` — a bug fix
