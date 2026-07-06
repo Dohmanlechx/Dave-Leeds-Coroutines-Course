@@ -5,9 +5,9 @@ sidebar_position: 0
 sidebar_label: Welcome
 ---
 
-# Coroutines TIL
+# Coroutines Learning Notes
 
-Team learning notes from **Dave Leeds' [Kotlin Coroutines and Concurrency](https://courses.typealias.com/coroutines)** course.
+David's learning notes from **Dave Leeds' [Kotlin Coroutines and Concurrency](https://courses.typealias.com/coroutines)** course.
 
 Each lesson in the course has its own page in the sidebar, grouped by module. Every note is
 organized into a few sections:

@@ -1,8 +1,8 @@
 {
-  "name": "coroutines-til",
+  "name": "coroutines-learning-notes",
   "version": "1.0.0",
   "private": true,
-  "description": "Team learning notes for Dave Leeds' Kotlin Coroutines course: a local CMS that writes Markdown into a Docusaurus site.",
+  "description": "David's learning notes for Dave Leeds' Kotlin Coroutines course: a local CMS that writes Markdown into a Docusaurus site.",
   "workspaces": [
     "docs-site",
     "cms"

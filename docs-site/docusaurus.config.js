@@ -3,8 +3,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Coroutines TIL',
-  tagline: 'Team notes from Dave Leeds\' Kotlin Coroutines course',
+  title: 'Coroutines Learning Notes',
+  tagline: 'David\'s notes from Dave Leeds\' Kotlin Coroutines course',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -51,7 +51,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'Coroutines TIL',
+        title: 'Coroutines Learning Notes',
         items: [
           {
             type: 'docSidebar',
@@ -63,7 +63,7 @@ const config = {
       },
       footer: {
         style: 'dark',
-        copyright: `Team learning notes · Kotlin Coroutines & Concurrency by Dave Leeds (typealias.com)`,
+        copyright: `David's learning notes · Kotlin Coroutines & Concurrency by Dave Leeds (typealias.com)`,
       },
       prism: {
         theme: prismThemes.github,

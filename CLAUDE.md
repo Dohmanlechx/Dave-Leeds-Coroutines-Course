@@ -1,6 +1,6 @@
 # Project guide for Claude
 
-Team learning notes for Dave Leeds' Kotlin Coroutines course: a local **CMS** (`cms/`) that
+David's learning notes for Dave Leeds' Kotlin Coroutines course: a local **CMS** (`cms/`) that
 writes Markdown into a **Docusaurus** site (`docs-site/`). Kotlin practice projects live in
 `kotlin/`. See `README.md` for how to run everything.
 

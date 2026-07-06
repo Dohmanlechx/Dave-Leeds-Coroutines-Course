@@ -1,6 +1,6 @@
-# Coroutines TIL
+# Coroutines Learning Notes
 
-Team learning notes for **Dave Leeds' [Kotlin Coroutines and Concurrency](https://courses.typealias.com/coroutines)** course.
+David's learning notes for **Dave Leeds' [Kotlin Coroutines and Concurrency](https://courses.typealias.com/coroutines)** course.
 
 Two pieces:
 

@@ -2,7 +2,7 @@
   "name": "til-cms",
   "version": "1.0.0",
   "private": true,
-  "description": "Local CMS for writing Kotlin Coroutines TIL notes into the Docusaurus site",
+  "description": "Local CMS for writing Kotlin Coroutines learning notes into the Docusaurus site",
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
