@@ -7,10 +7,6 @@ const config = {
   tagline: 'David\'s notes from Dave Leeds\' Kotlin Coroutines course',
   favicon: 'img/favicon.ico',
 
-  future: {
-    v4: true,
-  },
-
   // Deployed to GitHub Pages as a project site.
   url: 'https://dohmanlechx.github.io',
   baseUrl: '/Dave-Leeds-Coroutines-Course/',
