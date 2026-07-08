@@ -5,6 +5,11 @@ const { spawn } = require('child_process');
 const BEGIN = '<<<REWRITE_BEGIN>>>';
 const END = '<<<REWRITE_END>>>';
 
+// Grammar/spelling fixing is a simple task — use the cheapest, fastest model.
+// `haiku` is an alias the CLI resolves to the current Haiku, so it won't go stale.
+// Override with CMS_REWRITE_MODEL (alias like `sonnet`, or a full model id) if needed.
+const MODEL = process.env.CMS_REWRITE_MODEL || 'haiku';
+
 const REWRITE_INSTRUCTION = [
   'You are a copy editor. Fix all grammar, spelling, and punctuation errors in the',
   'text between the markers below. Do NOT change the meaning, do NOT add or remove',
@@ -42,7 +47,7 @@ function rewrite(text) {
 
     let child;
     try {
-      child = spawn('claude', ['-p'], { shell: true });
+      child = spawn('claude', ['-p', '--model', MODEL], { shell: true });
     } catch (err) {
       return reject(new Error(`Could not start the claude CLI: ${err.message}`));
     }
