@@ -15,6 +15,28 @@ const STRUCTURE_PATH = path.join(ROOT, 'course-structure.json');
 
 const structure = JSON.parse(fs.readFileSync(STRUCTURE_PATH, 'utf8'));
 
+// Where the Docusaurus dev server serves the published notes. The baseUrl is read
+// straight from the docs config so the two never drift; the port is Docusaurus's
+// default (overridable to match `npm run docs`).
+const DOCS_PORT = process.env.DOCS_PORT || 3000;
+const DOCS_BASE_URL = (() => {
+  try {
+    const cfg = fs.readFileSync(path.join(ROOT, 'docs-site', 'docusaurus.config.js'), 'utf8');
+    const m = /baseUrl:\s*['"]([^'"]+)['"]/.exec(cfg);
+    const base = m ? m[1] : '/';
+    return base.endsWith('/') ? base : base + '/';
+  } catch {
+    return '/';
+  }
+})();
+
+// The URL a saved lesson is published at. Docusaurus drops leading `NN-` number
+// prefixes from each path segment, so we mirror that to land on the real page.
+function previewUrl(moduleSlug, lessonSlug) {
+  const clean = (seg) => seg.replace(/^\d+-/, '');
+  return `http://localhost:${DOCS_PORT}${DOCS_BASE_URL}${clean(moduleSlug)}/${clean(lessonSlug)}`;
+}
+
 // Fast lookup: moduleSlug -> module, and moduleSlug/lessonSlug -> { lesson, module, index }.
 const moduleBySlug = new Map();
 const lessonIndex = new Map();
@@ -104,6 +126,7 @@ app.get('/api/note/:moduleSlug/:lessonSlug', async (req, res) => {
     module: info.module.module,
     fields,
     exists,
+    previewUrl: previewUrl(moduleSlug, lessonSlug),
   });
 });
 

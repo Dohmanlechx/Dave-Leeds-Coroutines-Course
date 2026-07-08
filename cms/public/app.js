@@ -105,7 +105,7 @@ async function selectLesson(moduleSlug, lessonSlug) {
   if (state.dirty && !confirm('You have unsaved changes. Discard them?')) return;
 
   const note = await api('GET', `/api/note/${moduleSlug}/${lessonSlug}`);
-  state.current = { moduleSlug, lessonSlug };
+  state.current = { moduleSlug, lessonSlug, previewUrl: note.previewUrl, exists: note.exists };
   state.dirty = false;
 
   $('#editor').hidden = false;
@@ -114,6 +114,7 @@ async function selectLesson(moduleSlug, lessonSlug) {
 
   renderFields(note.fields);
   setStatus(note.exists ? 'Loaded' : 'New note', note.exists ? 'saved' : '');
+  updatePreviewButton();
   highlightActive();
 }
 
@@ -444,6 +445,20 @@ function addRow(editor, value, afterRow) {
   return input;
 }
 
+// Enable "Preview" only once the lesson has a saved .md file — otherwise the docs
+// site would 404. Opening reuses a single named tab so repeat previews don't pile up.
+function updatePreviewButton() {
+  const btn = $('#preview-btn');
+  const ready = !!(state.current && state.current.exists);
+  btn.disabled = !ready;
+  btn.title = ready ? 'Open this lesson in the docs site' : 'Save the note first to preview it';
+}
+
+function openPreview() {
+  if (!state.current || !state.current.exists || !state.current.previewUrl) return;
+  window.open(state.current.previewUrl, 'docs-preview');
+}
+
 function markDirty() {
   if (!state.dirty) {
     state.dirty = true;
@@ -493,7 +508,9 @@ async function saveNote() {
     const { moduleSlug, lessonSlug } = state.current;
     await api('POST', `/api/note/${moduleSlug}/${lessonSlug}`, { fields });
     state.dirty = false;
+    state.current.exists = true; // the file now exists — preview becomes available
     setStatus('Saved ✓', 'saved');
+    updatePreviewButton();
     await loadMenu(); // refresh the has-note dot in the sidebar
   } catch (err) {
     setStatus('Save failed', 'unsaved');
@@ -512,6 +529,7 @@ function escapeHtml(s) {
 // --- Init -----------------------------------------------------------------
 
 $('#save-btn').addEventListener('click', saveNote);
+$('#preview-btn').addEventListener('click', openPreview);
 window.addEventListener('beforeunload', (e) => {
   if (state.dirty) {
     e.preventDefault();
