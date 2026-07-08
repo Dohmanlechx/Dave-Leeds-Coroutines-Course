@@ -44,6 +44,12 @@ npm run dev
 
 Or run them individually: `npm run cms` / `npm run docs`.
 
+**No terminal:** double-click **`cms.cmd`** (or the *Coroutines Notes CMS* shortcut on the
+Desktop). It starts **both** the CMS and the docs site, then opens the CMS
+(http://localhost:4000) in your browser. Use the **Preview ↗** button in the CMS to jump to
+the current lesson on the docs site (http://localhost:3000). Close the little console window
+to stop both.
+
 ### Workflow
 
 1. Open the CMS (http://localhost:4000).

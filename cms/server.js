@@ -4,6 +4,7 @@ const express = require('express');
 const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
+const { spawn } = require('child_process');
 
 const { buildMarkdown, parseMarkdown } = require('./lib/markdown');
 const { rewrite } = require('./lib/claude');
@@ -219,7 +220,25 @@ app.delete('/api/asset/:moduleSlug/:file', async (req, res) => {
   }
 });
 
+// Open the given URL in the default browser (best-effort, cross-platform).
+function openBrowser(url) {
+  const cmd =
+    process.platform === 'win32' ? 'cmd'
+    : process.platform === 'darwin' ? 'open'
+    : 'xdg-open';
+  const args = process.platform === 'win32' ? ['/c', 'start', '""', url] : [url];
+  try {
+    spawn(cmd, args, { stdio: 'ignore', detached: true }).unref();
+  } catch {
+    /* opening the browser is a convenience; ignore failures */
+  }
+}
+
 app.listen(PORT, () => {
-  console.log(`\n  TIL CMS running:  http://localhost:${PORT}`);
+  const url = `http://localhost:${PORT}`;
+  console.log(`\n  TIL CMS running:  ${url}`);
   console.log(`  Writing notes to: ${DOCS_DIR}\n`);
+  // Launched via the double-click icon (cms.cmd sets CMS_OPEN) — pop the browser
+  // once we're actually listening, so there's no connect-before-ready race.
+  if (process.env.CMS_OPEN) openBrowser(url);
 });
