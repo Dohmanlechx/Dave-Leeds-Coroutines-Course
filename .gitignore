@@ -9,9 +9,7 @@ docs-site/build/
 .cache-loader/
 
 # Kotlin / Gradle
-kotlin/coroutines-course/
-kotlin/**/build/
-kotlin/**/.gradle/
+kotlin/
 .idea/
 *.iml
 
