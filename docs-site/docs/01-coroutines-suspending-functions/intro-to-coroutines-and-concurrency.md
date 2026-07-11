@@ -6,11 +6,17 @@ module: "Coroutines and Suspending Functions"
 
 # Intro to Coroutines and Concurrency
 
+:::note Why this page runs long
+Fair warning — these notes are beefier than the rest. Before the course I got a
+head start by reading a book with a chapter that introduced coroutines at a basic
+level, so a lot of that extra reading spilled over into this page. The later pages
+travel lighter.
+:::
+
 ## Key Takeaways
 
 - [suspendCoroutineUninterceptedOrReturn](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.coroutines.intrinsics/suspend-coroutine-unintercepted-or-return.html)
 - Every time you see the word `suspend` in Kotlin, you are looking at a function that has the potential to return `COROUTINE_SUSPENDED`.
-- `yield()` is a suspending function that gives the other coroutine a chance to run some of its code.
 - `Thread.sleep()` versus `delay()`: the first one blocks execution, the second one suspends the coroutine, allowing another coroutine to run.
 - `withContext()` allows us to switch the dispatcher of a coroutine.
 - Fun fact about Android: it throws [NetworkOnMainThreadException](https://developer.android.com/reference/android/os/NetworkOnMainThreadException) if you attempt to make a network request from the main thread.
