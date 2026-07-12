@@ -12,7 +12,7 @@ module: "Shared Mutable State"
 
 ## Code Snippets & Gotchas
 
-When using `async`, you must be very careful not to stagger the execution by calling `await()` at the wrong time.
+When using `async { }`, you must be very careful not to stagger the execution by calling `await()` at the wrong time.
 
 ```kotlin
 for (order in orders()) {

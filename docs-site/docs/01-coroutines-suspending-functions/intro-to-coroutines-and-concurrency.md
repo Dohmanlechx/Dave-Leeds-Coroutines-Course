@@ -82,7 +82,7 @@ Kettle: whistling!
 Toaster: buttered
 ```
 
-Notice that `Toaster: bread in` prints *before* `Kettle: start heating`, even though `launch` is written first - the code after `launch` keeps running until it hits `yield()`. Without the `yield()` calls, the code outside the `launch` block would run to completion first.
+Notice that `Toaster: bread in` prints *before* `Kettle: start heating`, even though `launch { }` is written first - the code after `launch { }` keeps running until it hits `yield()`. Without the `yield()` calls, the code outside the `launch { }` block would run to completion first.
 
 ---
 `async { }` gives us `Deferred`, which is a subtype of `Job`, and `Deferred` has this method `await()`, which gives us whatever object we try to return.

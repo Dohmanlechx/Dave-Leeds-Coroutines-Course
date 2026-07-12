@@ -8,8 +8,8 @@ module: "Builders, Dispatchers, and Context"
 
 ## Key Takeaways
 
-- `launch` is basically firing and forgetting.
-- `async` purpose is producing some result.
+- `launch { }` is basically firing and forgetting.
+- `async { }` purpose is producing some result.
 
 ## Code Snippets & Gotchas
 

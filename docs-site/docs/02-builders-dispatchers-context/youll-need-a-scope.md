@@ -10,7 +10,7 @@ module: "Builders, Dispatchers, and Context"
 
 - Scope is "a group of _related_ coroutines".
 - `CoroutineScope` is used for a `runBlocking` function.
-- Coroutine builders like `launch` and `async` can only be run within a scope.
+- Coroutine builders like `launch { }` and `async { }` can only be run within a scope.
 
 ## Code Snippets & Gotchas
 
@@ -21,5 +21,5 @@ fun main() = runBlocking {
 }
 ```
 
-Without `launch`, it would stop at `foo()` until its job ends. With `launch`, it starts the job "in the background" and `main end` is immediately printed out.
+Without `launch { }`, it would stop at `foo()` until its job ends. With `launch { }`, it starts the job "in the background" and `main end` is immediately printed out.
 
