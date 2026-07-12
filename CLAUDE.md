@@ -8,6 +8,8 @@ writes Markdown into a **Docusaurus** site (`docs-site/`). Kotlin practice proje
 
 - **Never open pull requests** (`gh pr create`) and **never push** to a remote unless David
   explicitly asks in that message. Finish changes with a local commit at most.
+- **Never create new branches.** Commit directly on `main`. Don't run `git checkout -b`,
+  `git branch <new>`, or `git switch -c` unless David explicitly asks.
 
 ## Commit conventions
 
