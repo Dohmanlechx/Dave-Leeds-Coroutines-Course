@@ -33,3 +33,7 @@ I asked AI about `Dispatchers.IO` threads:
 >The OS scheduler can juggle them effortlessly using time-slicing if they are active.
 >IO threads spend most of their time asleep, meaning they don't fight for CPU time anyway.
 
+## Code Snippets & Gotchas
+
+A CPU core has at least one thread. Let's take Ryzen 9800X3D as an example - it has 8 cores and 16 threads, meaning each core can run two threads.
+
