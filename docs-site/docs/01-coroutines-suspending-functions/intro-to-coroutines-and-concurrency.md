@@ -7,7 +7,7 @@ module: "Coroutines and Suspending Functions"
 # Intro to Coroutines and Concurrency
 
 :::note Why this page runs long
-Fair warning — these notes are beefier than the rest. Before the course I got a
+Fair warning - these notes are beefier than the rest. Before the course I got a
 head start by reading a book with a chapter that introduced coroutines at a basic
 level, so a lot of that extra reading spilled over into this page. The later pages
 travel lighter.
@@ -35,11 +35,11 @@ In a suspending function, it might not be able to return the value immediately, 
 
 I was wondering how it would "know" which coroutine to pass the baton to, like "it's your turn now", so I looked it up: there is a Dispatcher with a queue of tasks. `yield()` doesn't target a specific coroutine. It just tells the Dispatcher queue, "Put me at the end of the line, and wake up whoever has been waiting the longest!".
 
-Concurrency vs. Parallelism — the only way to run coroutines in parallel (simultaneously) is to run them on separate threads.
+Concurrency vs. Parallelism - the only way to run coroutines in parallel (simultaneously) is to run them on separate threads.
 
 ## Code Snippets & Gotchas
 
-As stated, `yield()` gives the other coroutine a chance to run some code. My own little example — a kettle and a toaster taking turns:
+As stated, `yield()` gives the other coroutine a chance to run some code. My own little example - a kettle and a toaster taking turns:
 
 ```kotlin
 fun main() {
@@ -68,7 +68,7 @@ Kettle: whistling!
 Toaster: buttered
 ```
 
-Notice that `Toaster: bread in` prints *before* `Kettle: start heating`, even though `launch` is written first — the code after `launch` keeps running until it hits `yield()`. Without the `yield()` calls, the code outside the `launch` block would run to completion first.
+Notice that `Toaster: bread in` prints *before* `Kettle: start heating`, even though `launch` is written first - the code after `launch` keeps running until it hits `yield()`. Without the `yield()` calls, the code outside the `launch` block would run to completion first.
 
 ---
 `async { }` gives us `Deferred`, which is a subtype of `Job`, and `Deferred` has this method `await()`, which gives us whatever object we try to return.
@@ -80,15 +80,15 @@ val result = user.await()          // suspends the caller until fetchUser() fini
 ```
 
 ---
-Concurrency vs Parallelism — my own sketch of the difference:
+Concurrency vs Parallelism - my own sketch of the difference:
 
 ```text
 Concurrency (one thread, tasks interleaved over time):
-  Thread 1:  [A]—[B]—[A]—[B]—[A]—>   one worker switching back and forth
+  Thread 1:  [A]-[B]-[A]-[B]-[A]->   one worker switching back and forth
 
 Parallelism (two threads, at the same instant):
-  Thread 1:  [A]———[A]———[A]—>       two workers,
-  Thread 2:  [B]———[B]———>           genuinely at once
+  Thread 1:  [A]---[A]---[A]->       two workers,
+  Thread 2:  [B]---[B]--->           genuinely at once
 ```
 
 ---

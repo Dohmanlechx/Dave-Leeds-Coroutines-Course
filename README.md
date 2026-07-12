@@ -4,21 +4,21 @@ David's learning notes for **Dave Leeds' [Kotlin Coroutines and Concurrency](htt
 
 Two pieces:
 
-- **CMS** (`cms/`) — a small local web app. Menu of every course lesson; click one to write
+- **CMS** (`cms/`) - a small local web app. Menu of every course lesson; click one to write
   notes in structured fields (Key Takeaways · What I Still Don't Understand · General Notes ·
   Code Snippets & Gotchas). Each field has a **Rewrite with Claude** button that fixes only
   grammar/spelling. **Save** writes a Markdown file straight into the docs site.
-- **Docs site** (`docs-site/`) — a [Docusaurus](https://docusaurus.io) site that publishes
+- **Docs site** (`docs-site/`) - a [Docusaurus](https://docusaurus.io) site that publishes
   the notes. Anything saved in the CMS shows up here automatically.
 
 Also: `kotlin/` for practice projects (see its README).
 
-Runs locally on **macOS and Windows** — everything is Node + npm scripts.
+Runs locally on **macOS and Windows** - everything is Node + npm scripts.
 
 ## Prerequisites
 
 - **Node.js 18+** and npm.
-- The **`claude` CLI** installed and on your PATH (used by the *Rewrite with Claude* button —
+- The **`claude` CLI** installed and on your PATH (used by the *Rewrite with Claude* button -
   no API key needed, it uses your Claude subscription). Check with `claude --version`.
 
 ## Setup
@@ -64,7 +64,7 @@ as a Markdown image (with a thumbnail preview you can remove).
 ## How notes are stored
 
 Each note is a single Markdown file under `docs-site/docs/`, with frontmatter plus fixed
-`##` sections. **The Markdown file is the only source of truth** — reopening a lesson in the
+`##` sections. **The Markdown file is the only source of truth** - reopening a lesson in the
 CMS parses the file back into the fields. Editing the `.md` by hand works too.
 
 ## Build a static site (optional, later)
@@ -75,5 +75,5 @@ npm run build:docs   # outputs docs-site/build/
 
 ## Editing the lesson list
 
-The menu and folder structure come from `course-structure.json` at the repo root — edit
+The menu and folder structure come from `course-structure.json` at the repo root - edit
 there to add/rename lessons or modules.
