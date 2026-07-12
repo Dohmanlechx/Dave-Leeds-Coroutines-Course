@@ -18,15 +18,15 @@ fun main() {
     var totalCandy = 0L
 
     runBlocking {
-        for (bag in trickOrTreatBags()) {
+        for (bag in candyBags()) {
             launch(Dispatchers.Default) { 
                 totalCandy += countPieces(bag.size, bag.candyType) 
             }
         }
     }
 
-    val finalCount = String.format("Grand total: %,d pieces", totalCandy)
-    println(finalCount)
+    val result = String.format("Grand total: %,d pieces", totalCandy)
+    println(result)
 }
 ```
 
@@ -34,17 +34,13 @@ Updated code to prevent race condition - updating the state in the function body
 ```kotlin
 fun main() {
     val grandTotal = runBlocking {
-        trickOrTreatBags()
-            .map { singleBag -> 
-                async(Dispatchers.Default) { 
-                    countPieces(singleBag.size, singleBag.candyType) 
-                } 
-            }
-            .sumOf { activeTask -> activeTask.await() }
+        candyBags()
+            .map { bag -> async(Dispatchers.Default) { countPieces(bag.size, bag.candyType) } }
+            .sumOf { task -> task.await() }
     }
 
-    val finalCount = String.format("Grand total: %,d pieces", grandTotal)
-    println(finalCount)
+    val result = String.format("Grand total: %,d pieces", grandTotal)
+    println(result)
 }
 ```
 
