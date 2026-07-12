@@ -16,6 +16,7 @@ module: "Builders, Dispatchers, and Context"
 - How `Dispatchers.IO` can create that many threads "regardless".
 - What a thread really is, and how it works.
 - Argh... threading is difficult! I'll understand better soon enough...
+- **Update:** Gotcha, a thread is simply reading a queue of instructions.
 
 ## General Notes
 
