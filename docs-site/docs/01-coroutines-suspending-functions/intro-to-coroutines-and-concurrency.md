@@ -6,6 +6,13 @@ module: "Coroutines and Suspending Functions"
 
 # Intro to Coroutines and Concurrency
 
+:::note Why this page runs long
+Fair warning - these notes are beefier than the rest. Before the course I got a
+head start by reading a book with a chapter that introduced coroutines at a basic
+level, so a lot of that extra reading spilled over into this page. The later pages
+travel lighter.
+:::
+
 ## Key Takeaways
 
 - [suspendCoroutineUninterceptedOrReturn](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.coroutines.intrinsics/suspend-coroutine-unintercepted-or-return.html) is the "final checkpoint" of a suspending fuction.
