@@ -4,6 +4,11 @@ David's learning notes for Dave Leeds' Kotlin Coroutines course: a local **CMS**
 writes Markdown into a **Docusaurus** site (`docs-site/`). Kotlin practice projects live in
 `kotlin/`. See `README.md` for how to run everything.
 
+## Git workflow
+
+- **Never open pull requests** (`gh pr create`) and **never push** to a remote unless David
+  explicitly asks in that message. Finish changes with a local commit at most.
+
 ## Commit conventions
 
 Use **[Conventional Commits](https://www.conventionalcommits.org/)**:
@@ -12,19 +17,19 @@ Use **[Conventional Commits](https://www.conventionalcommits.org/)**:
 <type>(<optional scope>): <short summary>
 ```
 
-- **Title only — never write a commit body.** One subject line per commit (to save tokens).
+- **Title only - never write a commit body.** One subject line per commit (to save tokens).
   Keep the required `Co-Authored-By:` trailer; that footer is not a "body".
-- **type** — one of:
-  - `feat` — a new feature
-  - `fix` — a bug fix
-  - `docs` — documentation only
-  - `style` — formatting/whitespace, no code-behavior change
-  - `refactor` — code change that neither fixes a bug nor adds a feature
-  - `perf` — performance improvement
-  - `test` — adding or fixing tests
-  - `build` / `chore` — build, deps, tooling, config
-- **scope** (optional) — the area touched, e.g. `cms`, `docs`, `kotlin`.
-- **summary** — imperative mood, lowercase, no trailing period (e.g. "add rewrite endpoint").
+- **type** - one of:
+  - `feat` - a new feature
+  - `fix` - a bug fix
+  - `docs` - documentation only
+  - `style` - formatting/whitespace, no code-behavior change
+  - `refactor` - code change that neither fixes a bug nor adds a feature
+  - `perf` - performance improvement
+  - `test` - adding or fixing tests
+  - `build` / `chore` - build, deps, tooling, config
+- **scope** (optional) - the area touched, e.g. `cms`, `docs`, `kotlin`.
+- **summary** - imperative mood, lowercase, no trailing period (e.g. "add rewrite endpoint").
 - Breaking changes: add `!` after the type/scope (e.g. `feat(cms)!: ...`) or a `BREAKING CHANGE:` footer.
 
 Examples:
