@@ -33,13 +33,13 @@ fun main() {
 Updated code to prevent race condition - updating the state in the function body itself, outside the coroutine:
 ```kotlin
 fun main() {
-    val grandTotal = runBlocking {
+    val totalCandy = runBlocking {
         candyBags()
             .map { bag -> async(Dispatchers.Default) { countPieces(bag.size, bag.candyType) } }
             .sumOf { task -> task.await() }
     }
 
-    val result = String.format("Grand total: %,d pieces", grandTotal)
+    val result = String.format("Grand total: %,d pieces", totalCandy)
     println(result)
 }
 ```
