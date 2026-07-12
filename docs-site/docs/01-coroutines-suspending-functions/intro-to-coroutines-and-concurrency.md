@@ -6,16 +6,9 @@ module: "Coroutines and Suspending Functions"
 
 # Intro to Coroutines and Concurrency
 
-:::note Why this page runs long
-Fair warning - these notes are beefier than the rest. Before the course I got a
-head start by reading a book with a chapter that introduced coroutines at a basic
-level, so a lot of that extra reading spilled over into this page. The later pages
-travel lighter.
-:::
-
 ## Key Takeaways
 
-- [suspendCoroutineUninterceptedOrReturn](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.coroutines.intrinsics/suspend-coroutine-unintercepted-or-return.html)
+- [suspendCoroutineUninterceptedOrReturn](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.coroutines.intrinsics/suspend-coroutine-unintercepted-or-return.html) is the "final checkpoint" of a suspending fuction.
 - Every time you see the word `suspend` in Kotlin, you are looking at a function that has the potential to return `COROUTINE_SUSPENDED`.
 - `Thread.sleep()` versus `delay()`: the first one blocks execution, the second one suspends the coroutine, allowing another coroutine to run.
 - `withContext()` allows us to switch the dispatcher of a coroutine.
@@ -39,6 +32,20 @@ Concurrency vs. Parallelism - the only way to run coroutines in parallel (simult
 
 ## Code Snippets & Gotchas
 
+As stated in the first bullet point - `suspendCoroutineUninterceptedOrReturn` is the "final checkpoint" of a suspending function. Illustrating diagram:
+```
+                  [ suspendCoroutineUninterceptedOrReturn ]
+                                     |
+                  Does the data arrive immediately?
+                     /                       \
+                  (YES)                     (NO)
+                   /                           \
+       Return the value directly.       Return COROUTINE_SUSPENDED.
+     (No actual suspension happens!)    (The coroutine completely pauses
+                                         and yields its thread right here!)
+```
+
+---
 As stated, `yield()` gives the other coroutine a chance to run some code. My own little example - a kettle and a toaster taking turns:
 
 ```kotlin
