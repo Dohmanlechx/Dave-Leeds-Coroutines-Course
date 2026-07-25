@@ -14,6 +14,10 @@ module: "Structured Concurrency 1"
 - `Job` implements the `CoroutineScope` interface.
 - A `launch { }` wrapper always waits for its nested `launch { }` wrappers to finish.
 
+## What I Still Don't Understand
+
+- After all, I am still not perfectly convinced of _what_ coroutine builder I should use for a specific case.
+
 ## General Notes
 
 This lesson was basically about hierarchy. A parent coroutine always waits for its children to finish before finishing.
