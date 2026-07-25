@@ -35,3 +35,21 @@ fun main() = runBlocking<Unit> {
 
 According to my understanding, the output should show the same object twice. I've posted a question to Dave - awaiting a reply and will post it here.
 
+***Update:*** Dave responded with a very detailed response, which made sense:
+
+_(sorry about the quality, I'm compressing all the screenshots into_ `webp` _here)_
+
+![screenshot](./img/ways-to-get-a-scope-1784996960882l7wn.webp)
+
+I ran his code example and got this:
+```
+First        : BlockingCoroutine{Active}@161cd475 // Grandparent
+Second       : StandaloneCoroutine{Active}@64cee07 // Parent
+Third        : StandaloneCoroutine{Active}@5f5a92bb // Self
+--------------
+Self         : StandaloneCoroutine{Active}@5f5a92bb
+Parent       : StandaloneCoroutine{Completing}@64cee07
+Grandparent  : BlockingCoroutine{Completing}@161cd475
+Nothing here : null
+```
+
