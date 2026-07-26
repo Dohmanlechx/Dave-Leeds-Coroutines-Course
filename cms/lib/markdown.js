@@ -21,6 +21,58 @@ function escapeYaml(value) {
 }
 
 /**
+ * Docusaurus compiles notes as MDX, which reads `{...}` in prose as a JavaScript
+ * expression - so writing `coroutineScope { ... }` in a sentence fails the whole
+ * site build with "Could not parse expression with acorn". Braces are escaped on
+ * the way out and unescaped on the way back in, so the editor never shows the
+ * backslashes.
+ *
+ * Code is left alone: inside fences and inline code spans MDX doesn't evaluate
+ * braces, and a backslash there would corrupt the snippet.
+ *
+ * @param {string} text
+ * @param {(chunk: string) => string} transform  applied only to prose
+ * @returns {string}
+ */
+function mapProse(text, transform) {
+  let inFence = false;
+  let fenceMarker = '';
+
+  return String(text)
+    .split('\n')
+    .map((line) => {
+      const fence = /^\s*(`{3,}|~{3,})/.exec(line);
+      if (fence) {
+        const marker = fence[1];
+        if (!inFence) {
+          inFence = true;
+          fenceMarker = marker;
+        } else if (marker[0] === fenceMarker[0] && marker.length >= fenceMarker.length) {
+          inFence = false;
+          fenceMarker = '';
+        }
+        return line;
+      }
+      if (inFence) return line;
+      // Odd indices are the captured inline-code spans, which stay verbatim.
+      return line
+        .split(/(`+[^`]*`+)/g)
+        .map((part, i) => (i % 2 === 1 ? part : transform(part)))
+        .join('');
+    })
+    .join('\n');
+}
+
+// Skipping already-escaped braces keeps this idempotent across repeated saves.
+function escapeMdx(text) {
+  return mapProse(text, (chunk) => chunk.replace(/(?<!\\)([{}])/g, '\\$1'));
+}
+
+function unescapeMdx(text) {
+  return mapProse(text, (chunk) => chunk.replace(/\\([{}])/g, '$1'));
+}
+
+/**
  * Build the full Markdown document from note fields + lesson metadata.
  * Empty sections are omitted so the published doc stays clean.
  *
@@ -45,7 +97,7 @@ function buildMarkdown(fields, meta) {
   for (const { key, heading } of SECTIONS) {
     const value = (fields[key] || '').trim();
     if (!value) continue;
-    body.push(`## ${heading}`, '', value, '');
+    body.push(`## ${heading}`, '', escapeMdx(value), '');
   }
 
   return front.join('\n') + body.join('\n') + (body.length ? '\n' : '');
@@ -75,7 +127,7 @@ function parseMarkdown(md) {
   let buffer = [];
 
   const flush = () => {
-    if (currentKey) result[currentKey] = buffer.join('\n').trim();
+    if (currentKey) result[currentKey] = unescapeMdx(buffer.join('\n').trim());
     buffer = [];
   };
 
