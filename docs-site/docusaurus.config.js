@@ -43,6 +43,22 @@ const config = {
     ],
   ],
 
+  themes: [
+    [
+      // Offline/local search: builds a lunr index at build time and runs
+      // entirely client-side, so it works on GitHub Pages with no external service.
+      '@easyops-cn/docusaurus-search-local',
+      /** @type {import('@easyops-cn/docusaurus-search-local').PluginOptions} */
+      ({
+        hashed: true,
+        docsRouteBasePath: '/', // docs are the site root
+        indexBlog: false,
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+      }),
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
