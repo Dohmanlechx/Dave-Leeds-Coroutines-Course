@@ -8,6 +8,9 @@ docs-site/.docusaurus/
 docs-site/build/
 .cache-loader/
 
+# Claude Code
+.claude/
+
 # Kotlin / Gradle
 kotlin/
 .idea/
