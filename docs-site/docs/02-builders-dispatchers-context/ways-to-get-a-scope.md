@@ -13,7 +13,7 @@ module: "Builders, Dispatchers, and Context"
 
 ## General Notes
 
-When you see red squiggling lines due to missing scope, and you are in doubt, you can wrap the function in a `coroutineScope` wrapper. It will give it whatever scope the caller is using. It's kind of considered the gold standard.
+When you are inside a suspend function and see red squiggling lines on launch or async due to a missing scope, wrap those calls in a `coroutineScope` wrapper. It safely inherits the caller’s context and provides a local scope for your child coroutines. This is the "gold standard" for parallel work inside suspend functions.
 
 ## Code Snippets & Gotchas
 
