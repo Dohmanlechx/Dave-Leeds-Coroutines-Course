@@ -36,38 +36,19 @@ This installs both the CMS and the docs site (npm workspaces).
 Start both servers at once:
 
 ```bash
-npm run dev:search   # docs served as a real build - search works
-npm run dev          # docs in dev mode - instant hot reload, no search
+npm run dev
 ```
 
 - CMS:  http://localhost:4000  ← write your notes here
 - Docs: http://localhost:3000  ← preview the published site
 
-Both use the same ports; they differ only in how the docs site is served (see
-*Search* below). Or run the pieces individually: `npm run cms` / `npm run docs` /
-`npm run docs:search`.
+Or run them individually: `npm run cms` / `npm run docs`.
 
 **No terminal:** double-click **`cms.cmd`** (or the *Coroutines Notes CMS* shortcut on the
-Desktop). It runs `npm run dev:search`, so **both** the CMS and the docs site start with
-search working, then opens the CMS (http://localhost:4000) in your browser. Use the
-**Preview ↗** button in the CMS to jump to the current lesson on the docs site
-(http://localhost:3000). Close the little console window to stop both.
-
-### Search
-
-The docs site has an offline search box (`@easyops-cn/docusaurus-search-local`) - the index is
-built locally, so there's no Algolia account or network call. **Docusaurus only generates that
-index during a real build**, which is why the dev server tells you to run a build instead.
-
-So `npm run dev:search` (and therefore `cms.cmd`) builds the site and serves the built output
-via `scripts/serve-docs.js`, which also watches `docs-site/docs/` and rebuilds a couple of
-seconds after you save. The trade-off versus `npm run dev`:
-
-- First start takes ~15s longer (that's the build).
-- A saved note appears in the docs after a short rebuild, not instantly - the console prints
-  `[docs] ready ...` when the refreshed page is live.
-
-Use plain `npm run dev` when you're writing a lot and want instant reloads and don't need search.
+Desktop). It starts **both** the CMS and the docs site, then opens the CMS
+(http://localhost:4000) in your browser. Use the **Preview ↗** button in the CMS to jump to
+the current lesson on the docs site (http://localhost:3000). Close the little console window
+to stop both.
 
 ### Workflow
 
@@ -91,6 +72,25 @@ CMS parses the file back into the fields. Editing the `.md` by hand works too.
 ```bash
 npm run build:docs   # outputs docs-site/build/
 ```
+
+## Search
+
+The docs site has a search box, backed by `@easyops-cn/docusaurus-search-local`: the index is
+built locally and shipped with the site, so there's no Algolia account and no network call.
+
+**Docusaurus only generates that index during a real build**, so the search box does nothing on
+the dev server (`npm run dev`, `cms.cmd`) - it tells you to run a build instead. That's expected:
+
+- On the **published site** (GitHub Pages) search always works - the deploy runs a build.
+- **Locally**, when you want to search your notes:
+
+  ```bash
+  npm run build:docs
+  npm --workspace docs-site run serve   # http://localhost:3000
+  ```
+
+  That serves a snapshot, so re-run both after saving new notes. Keep using `npm run dev` for
+  writing, where hot reload is instant.
 
 ## Editing the lesson list
 

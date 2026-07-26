@@ -10,10 +10,8 @@
   "scripts": {
     "cms": "node cms/server.js",
     "docs": "npm --workspace docs-site run start",
-    "docs:search": "node scripts/serve-docs.js",
     "build:docs": "npm --workspace docs-site run build",
-    "dev": "concurrently --names \"CMS,DOCS\" --prefix-colors \"magenta,cyan\" \"npm run cms\" \"npm run docs\"",
-    "dev:search": "concurrently --names \"CMS,DOCS\" --prefix-colors \"magenta,cyan\" \"npm run cms\" \"npm run docs:search\""
+    "dev": "concurrently --names \"CMS,DOCS\" --prefix-colors \"magenta,cyan\" \"npm run cms\" \"npm run docs\""
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

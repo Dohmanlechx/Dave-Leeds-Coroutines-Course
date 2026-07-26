@@ -6,7 +6,6 @@ yarn-error.log
 # Docusaurus
 docs-site/.docusaurus/
 docs-site/build/
-docs-site/build-staging/
 .cache-loader/
 
 # Kotlin / Gradle
