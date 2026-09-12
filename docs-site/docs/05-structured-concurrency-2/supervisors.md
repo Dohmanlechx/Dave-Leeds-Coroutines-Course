@@ -22,3 +22,9 @@ _"A supervisor prevents a child's failure from triggering cancellation up the pa
 
 I've posted this as a comment for the lesson. I will update here once he responds.
 
+**Update:**
+
+Hmm, I tested his code and it indeed doesn't crash the program when it should, according to the earlier statement, as I ran the code in `main`. I don't remember why I believed in that statement, but I will let this go. A Supervisor **does** stop the exception from being propagated, but it prints out the exception.
+
+![screenshot](./img/supervisors-1789205544598sqh2.webp)
+
