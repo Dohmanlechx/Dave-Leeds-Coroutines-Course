@@ -65,7 +65,7 @@
     "module": "Flow 1: Essentials",
     "slug": "07-flow-1-essentials",
     "lessons": [
-      { "title": "Review of Collections and Sequences", "slug": "review-of-collections-and-sequences" },
+      { "title": "Characteristics of Collections and Sequences", "slug": "characteristics-of-collections-and-sequences" },
       { "title": "Flows, Collectors, and Emitters", "slug": "flows-collectors-and-emitters" },
       { "title": "Flow Operators", "slug": "flow-operators" },
       { "title": "Flow and Cancellations", "slug": "flow-and-cancellations" },
