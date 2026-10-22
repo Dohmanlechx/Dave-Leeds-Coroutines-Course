@@ -46,7 +46,8 @@ Or run them individually: `npm run cms` / `npm run docs`.
 
 **No terminal:** double-click **`cms.cmd`** (or the *Coroutines Notes CMS* shortcut on the
 Desktop). It starts **both** the CMS and the docs site, then opens the CMS
-(http://localhost:4000) in your browser. Use the **Preview ↗** button in the CMS to jump to
+(http://localhost:4000) in your browser. If Windows has reserved port 4000, the CMS picks a
+free port instead and the console shows which one. Use the **Preview ↗** button in the CMS to jump to
 the current lesson on the docs site (http://localhost:3000). Close the little console window
 to stop both.
 

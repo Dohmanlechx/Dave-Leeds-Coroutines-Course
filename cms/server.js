@@ -234,11 +234,25 @@ function openBrowser(url) {
   }
 }
 
-app.listen(PORT, () => {
-  const url = `http://localhost:${PORT}`;
-  console.log(`\n  TIL CMS running:  ${url}`);
-  console.log(`  Writing notes to: ${DOCS_DIR}\n`);
-  // Launched via the double-click icon (cms.cmd sets CMS_OPEN) — pop the browser
-  // once we're actually listening, so there's no connect-before-ready race.
-  if (process.env.CMS_OPEN) openBrowser(url);
-});
+// Windows (Hyper-V/WinNAT) reserves shifting 100-port blocks that can swallow PORT and
+// fail with EACCES, so fall back to any free port the OS hands out instead of crashing.
+function listen(port) {
+  const server = app.listen(port, () => {
+    const url = `http://localhost:${server.address().port}`;
+    console.log(`\n  TIL CMS running:  ${url}`);
+    console.log(`  Writing notes to: ${DOCS_DIR}\n`);
+    // Launched via the double-click icon (cms.cmd sets CMS_OPEN) — pop the browser
+    // once we're actually listening, so there's no connect-before-ready race.
+    if (process.env.CMS_OPEN) openBrowser(url);
+  });
+  server.on('error', (err) => {
+    if ((err.code === 'EACCES' || err.code === 'EADDRINUSE') && port !== 0) {
+      console.log(`  Port ${port} unavailable (${err.code}), using a free port instead...`);
+      listen(0);
+    } else {
+      throw err;
+    }
+  });
+}
+
+listen(Number(PORT));
